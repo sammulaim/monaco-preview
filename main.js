@@ -1,25 +1,70 @@
 import * as monaco from 'monaco-editor';
-import 'monaco-editor/min/vs/editor/editor.main.css';
 
-const defaultHTML = `<html>
-  <body>
-    <h1>Hello from Monaco!</h1>
-  </body>
-</html>`;
+const editorContainer = document.getElementById('editor');
+const previewFrame = document.getElementById('preview');
+const aiInput = document.getElementById('ai-input');
+const aiButton = document.getElementById('ai-generate');
 
-const editor = monaco.editor.create(document.getElementById('editor'), {
-  value: defaultHTML,
+const editor = monaco.editor.create(editorContainer, {
+  value: `<!DOCTYPE html>
+<html>
+  <head><title>AI Website</title></head>
+  <body><h1>Welcome!</h1></body>
+</html>`,
   language: 'html',
-  theme: 'vs-dark'
+  theme: 'vs-dark',
+  automaticLayout: true,
 });
 
-const preview = document.getElementById('preview');
+function updatePreview() {
+  previewFrame.srcdoc = editor.getValue();
+}
 
-// Initial render
-preview.srcdoc = defaultHTML;
+editor.onDidChangeModelContent(updatePreview);
+updatePreview();
 
-// Update preview on change
-editor.onDidChangeModelContent(() => {
-  const html = editor.getValue();
-  preview.srcdoc = html;
+aiButton.addEventListener('click', async () => {
+  const userPrompt = aiInput.value.trim();
+  if (!userPrompt) return;
+
+  aiButton.disabled = true;
+  aiButton.textContent = "Generating...";
+
+  try {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  method: 'POST',
+  headers: {
+  Authorization: `Bearer qun7_hqAOsjiUxfe5NQc9Nz06hAymycHBwRIA_AlJlFFZD6IWRzTsQMxetN-UgpSjP4aWaHaT4T3BlbkFJn2sFESUPUz4r-KoGlePOV2zCuG38qIfwQX5WrwCqrAzx5UnZiiECw9rNZ-nCXZHB3NmdYXMpMA`,
+  'Content-Type': 'application/json',
+},
+
+  body: JSON.stringify({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      { role: 'system', content: 'You are an expert HTML/CSS generator. Only return full HTML documents.' },
+      { role: 'user', content: userPrompt }
+    ]
+  }),
+});
+
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          { role: 'system', content: 'You are an expert HTML/CSS generator. Only return full HTML documents.' },
+          { role: 'user', content: userPrompt }
+        ]
+      }),
+    });
+
+    const data = await response.json();
+    const html = data.choices?.[0]?.message?.content || 'Failed to get response.';
+    editor.setValue(html);
+  } catch (error) {
+    alert("Error generating code: " + error.message);
+  }
+
+  aiButton.disabled = false;
+  aiButton.textContent = "Generate with AI";
 });

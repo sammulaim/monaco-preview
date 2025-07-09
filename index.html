@@ -11,8 +11,16 @@
   </style>
 </head>
 <body>
-  <div id="editor"></div>
-  <iframe id="preview"></iframe>
-  <script type="module" src="/main.js"></script>
+  <div style="display: flex; flex-direction: column; width: 100vw; height: 100vh; overflow: hidden;">
+    <div style="flex: 1; display: flex;">
+      <div id="editor" style="width: 50%; height: 100%;"></div>
+      <iframe id="preview" style="width: 50%; height: 100%; border-left: 1px solid #ccc;"></iframe>
+    </div>
+    <div style="padding: 10px; border-top: 1px solid #ccc; display: flex;">
+      <input id="ai-input" type="text" placeholder="Describe your website..." style="flex: 1; padding: 8px;" />
+      <button id="ai-generate" style="margin-left: 10px;">Generate with AI</button>
+    </div>
+  </div>
+<script type="module" src="/main.jsx"></script>
 </body>
 </html>
