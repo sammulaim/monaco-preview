@@ -1,25 +1,34 @@
 import * as monaco from 'monaco-editor';
-import 'monaco-editor/min/vs/editor/editor.main.css';
 
-const defaultHTML = `<html>
+const editor = monaco.editor.create(document.getElementById('app'), {
+  value: `<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body { font-family: sans-serif; }
+    </style>
+  </head>
   <body>
     <h1>Hello from Monaco!</h1>
+    <p>This is a live preview.</p>
+    <script>
+      console.log("JS is working!");
+    </script>
   </body>
-</html>`;
-
-const editor = monaco.editor.create(document.getElementById('editor'), {
-  value: defaultHTML,
+</html>`,
   language: 'html',
-  theme: 'vs-dark'
+  theme: 'vs-dark',
+  automaticLayout: true,
 });
 
-const preview = document.getElementById('preview');
+const iframe = document.createElement('iframe');
+iframe.style.width = '50%';
+iframe.style.height = '100vh';
+iframe.style.position = 'fixed';
+iframe.style.right = '0';
+iframe.style.top = '0';
+iframe.style.border = 'none';
+document.body.appendChild(iframe);
 
-// Initial render
-preview.srcdoc = defaultHTML;
-
-// Update preview on change
-editor.onDidChangeModelContent(() => {
-  const html = editor.getValue();
-  preview.srcdoc = html;
-});
+function updatePreview() {
+  const code = editor.g
