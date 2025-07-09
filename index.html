@@ -1,34 +1,31 @@
-<body>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  <div style="display: flex; height: 100vh;">
-    <div id="app" style="width: 50%;"></div>
-    <iframe id="preview" style="width: 50%; border: none;"></iframe>
-  </div>
-
-  <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111; color: white; padding: 10px; display: flex;">
-    <input id="prompt" type="text" placeholder="Describe your website..." style="flex: 1; padding: 8px;" />
-    <button onclick="handlePrompt()" style="padding: 8px 16px; margin-left: 8px;">Generate</button>
-  </div>
-
-<script type="module" src="/main.jsx"></script>
-
-=======
->>>>>>> working-ai-version
-  <div style="display: flex; flex-direction: column; width: 100vw; height: 100vh; overflow: hidden;">
-    <div style="flex: 1; display: flex;">
-      <div id="editor" style="width: 50%; height: 100%;"></div>
-      <iframe id="preview" style="width: 50%; height: 100%; border-left: 1px solid #ccc;"></iframe>
-    </div>
-    <div style="padding: 10px; border-top: 1px solid #ccc; display: flex;">
-      <input id="ai-input" type="text" placeholder="Describe your website..." style="flex: 1; padding: 8px;" />
-      <button id="ai-generate" style="margin-left: 10px;">Generate with AI</button>
-    </div>
-  </div>
-<script type="module" src="/main.jsx"></script>
-<<<<<<< HEAD
-=======
->>>>>>> 6a407fb (Working AI preview + append support)
->>>>>>> working-ai-version
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="module" src="/@vite/client"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Website Builder</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+      #editor {
+        width: 50%;
+        height: 100vh;
+      }
+      #preview {
+        width: 50%;
+        height: 100vh;
+        border-left: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="editor"></div>
+    <iframe id="preview"></iframe>
+    <script type="module" src="/main.jsx"></script>
+  </body>
+</html>
